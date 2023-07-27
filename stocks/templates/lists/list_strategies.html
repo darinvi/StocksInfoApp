@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block page_content %}
+<h1>Total of {{ object_list|length }} public ideas:</h1>
+    {% for obj in object_list %}
+        {% if obj.show_public and obj.user.profile.first_name %}
+            {% include 'components/list_component.html' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

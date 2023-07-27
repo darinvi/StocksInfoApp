@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block page_content %}
+
+<form action="{% url 'post_comment' ticker_pk=ticker_pk %}" method="post">
+    {{ form }}
+    <button>Post Comment</button>
+    {% csrf_token %}
+</form>
+
+{% for obj in object_list reversed %}
+<div class="comment">
+    <h1>{{ obj.comment }}</h1>
+    <p>Posted by: {{ obj.author.profile.first_name }} at {{ obj.created_at }}</p>
+    {% if request.user == obj.author %}
+    <a href="{% url 'delete_comment' comment_id=obj.pk  ticker_id=obj.ticker.pk %}">delete</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

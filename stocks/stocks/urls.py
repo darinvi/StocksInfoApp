@@ -1,5 +1,5 @@
 """
-URL configuration for stocks project.
+URL configuration for testprep project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('stocks.stocks_app.urls'))
+    path('', include('stocks.stocks_app.urls')),
+    path('auth/', include('stocks.stocks_auth.urls')),
 ]

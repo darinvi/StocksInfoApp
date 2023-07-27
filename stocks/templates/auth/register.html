@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+
+{% block page_content %}
+<form action="{% url 'register_user' %}" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button>Register</button>
+</form>
+{% endblock %}

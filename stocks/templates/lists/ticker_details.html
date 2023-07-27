@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+{% block page_content %}
+    {% if object_list|length > 0%}
+        {% for obj in object_list %}
+            {% include 'components/list_component.html' %}
+        {% endfor %}
+    {% else %}
+    <h1>No posts with given ticker</h1>
+    {% endif %}
+{% endblock %}

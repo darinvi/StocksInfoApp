@@ -1,13 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Exam Stock Site</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}">
 </head>
+
 <body>
-    <h2>
-        It works!
-    </h2>
+    <div class="navbar">
+        <li><a href="{% url 'list_strategies' %}">All Ideas</a></li> 
+        <ul class="login">
+            {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'login_user' %}">Login</a></li>
+            <li><a href="{% url 'register_user' %}">Register</a></li>
+            {% else %}
+            <li><a href="{% url 'profile_user' %}">Profile</a></li>
+            <li><a href="{% url 'create_strategy' %}">Create Idea</a></li>
+            <li><a href="{% url 'logout_user' %}">Logout</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="page-content">
+        {% block page_content %}
+        {% endblock %}
+    </div>
+
 </body>
+
 </html>

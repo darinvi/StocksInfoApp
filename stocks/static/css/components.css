@@ -1,0 +1,47 @@
+.login,
+.navbar {
+    display: flex;
+    gap: 2em; 
+}
+
+.navbar li {
+    display: block;
+}
+
+.navbar a { 
+    text-decoration: none;
+    color: white;
+}
+
+.navbar {
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5em;
+    background-color: black;
+}
+
+.more-info {
+    display: flex;
+    gap: 2em;
+}
+
+.trade-idea,
+.comment {
+    background-color: rgba(255, 0, 0, 0.2);
+    margin: 1.5em 0;
+    padding: 0.5em;
+    border-radius: 12px;
+}
+
+.page-content {
+    padding: 3em;
+}
+
+html {
+    min-height: 100%;
+    background-color: pink;
+}
+
+body {
+    margin: 0;
+}
