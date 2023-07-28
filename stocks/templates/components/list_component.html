@@ -5,7 +5,7 @@
     <p>Created by: <a href="{% url 'user_details' user_pk=obj.user.pk %}">{{ obj.user.profile.first_name }}</a></p>
     <p>Ticker name: <a href="{% url 'ticker_details' ticker_name=obj.ticker_name %}">{{ obj.ticker_name }}</a></p>
     <div class="more-info">
-    <a href="#">More</a>
+    <a href="{% url 'more_details' ticker_id=obj.pk %}">More</a>
     <a href="{% url 'post_comment' ticker_pk=obj.pk %}">Comments</a>
     {% if obj.user == request.user or request.user.is_superuser or request.user.is_staff %}
     <a href="{% url 'delete_ticker' ticker_id=obj.pk %}">delete</a>

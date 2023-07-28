@@ -1,8 +1,6 @@
-from typing import Any
-from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
-from .models import Ticker, Comment, Profile
+from .models import Ticker, Comment
 from stocks.stocks_auth.models import AppUser
 from .forms import TickerModelForm, CommentModelForm
 from django.urls import reverse_lazy, reverse
@@ -101,3 +99,11 @@ class TickerDetails(views.ListView):
     def get_queryset(self):    
         queryset = Ticker.objects.filter(ticker_name__iexact=self.kwargs['ticker_name'])
         return queryset
+    
+class MoreDetails(views.TemplateView):
+    template_name = 'components/more_ticker_info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticker'] = Ticker.objects.get(pk=self.kwargs['ticker_id'])
+        return context

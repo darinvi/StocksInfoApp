@@ -28,6 +28,8 @@ class Ticker(models.Model):
     )
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     show_public = models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+
 
 class Comment(models.Model):
     comment = models.CharField(
@@ -36,9 +38,4 @@ class Comment(models.Model):
     )
     author = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE)
-    created_at = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created_at = timezone.localtime(timezone.now())
-        super().save(*args, **kwargs)
+    created_at = models.DateTimeField(auto_now_add=True)
