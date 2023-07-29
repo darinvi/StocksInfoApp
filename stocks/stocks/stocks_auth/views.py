@@ -5,6 +5,8 @@ from django.views import generic as views
 from stocks.stocks_app.models import Profile
 from django import forms
 from django.urls import reverse_lazy
+from django.urls import reverse
+from django.shortcuts import render, redirect
 
 UserModel = get_user_model()
 
@@ -44,3 +46,9 @@ class UserReisterView(views.CreateView):
 
 class UserLogoutVeiw(auth_views.LogoutView):
     pass
+
+def delete_account(request):
+    user = UserModel.objects.get(pk=request.user.pk)
+    logout(request)
+    user.delete()
+    return redirect(reverse('login_user'))

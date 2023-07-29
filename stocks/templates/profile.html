@@ -4,8 +4,7 @@
 
 <h1>Current User: {{ request.user.profile.first_name }}</h1>
 <h2>Email: {{ request.user }}</h2>
-<a href="">Delete Account</a>
-<a href="">Edit Account</a>
+<a href="{% url 'delete_account' %}">Delete Account</a>
 
 {% if object_list|length == 0 %}
     <h1>No Posts Yet</h1>

@@ -10,3 +10,4 @@ class CommentModelForm(forms.ModelForm):
     class Meta:
         model = Comment
         exclude = ['ticker', 'author', 'created_at']
+
