@@ -11,8 +11,11 @@
 
 <body>
     <div class="navbar">
-        <li><a href="{% url 'list_strategies' %}">All Ideas</a></li> 
-        <ul class="login">
+        <div class="navbar-left">
+            <li><a href="{% url 'list_strategies' %}">All Ideas</a></li> 
+            <li><a href="#">Courses</a></li> 
+        </div>
+        <ul class="navbar-right">
             {% if not request.user.is_authenticated %}
             <li><a href="{% url 'login_user' %}">Login</a></li>
             <li><a href="{% url 'register_user' %}">Register</a></li>

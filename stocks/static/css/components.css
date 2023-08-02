@@ -1,4 +1,5 @@
-.login,
+.navbar-right,
+.navbar-left,
 .navbar {
     display: flex;
     gap: 2em; 
