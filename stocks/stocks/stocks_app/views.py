@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
-from .models import Ticker, Comment
+from .models import Ticker, Comment, Course
 from stocks.stocks_auth.models import AppUser
-from .forms import TickerModelForm, CommentModelForm
+from .forms import TickerModelForm, CommentModelForm, CourseModelForm
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins
@@ -107,3 +107,20 @@ class MoreDetails(views.TemplateView):
         context = super().get_context_data(**kwargs)
         context['ticker'] = Ticker.objects.get(pk=self.kwargs['ticker_id'])
         return context
+    
+class CourseFormView(auth_mixins.LoginRequiredMixin, views.CreateView):
+    form_class = CourseModelForm
+    model = Course
+    template_name = 'forms/create_course.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class CourseListView(views.ListView):
+    template_name = 'lists/list_courses.html'
+    model = Course
+
+def create_content(request):
+    return render(request, 'components/create_content.html')

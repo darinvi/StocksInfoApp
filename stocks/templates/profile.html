@@ -8,10 +8,10 @@
 
 {% if object_list|length == 0 %}
     <h1>No Posts Yet</h1>
-{% endif %}
+{% else %}
 <h2>All posts:</h2>
 {% for obj in object_list %}
     {% include 'components/list_component.html' %}
 {% endfor %}
-
+{% endif %}
 {% endblock %}

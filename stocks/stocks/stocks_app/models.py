@@ -22,7 +22,7 @@ class Ticker(models.Model):
         blank=False,
         null=False
     )
-    trade_strategy = models.CharField(
+    trade_strategy = models.TextField(
         blank=False,
         null=False
     )
@@ -32,10 +32,13 @@ class Ticker(models.Model):
 
 
 class Comment(models.Model):
-    comment = models.CharField(
-        blank=False,
-        null=False
-    )
+    comment = models.TextField(blank=False, null=False)
     author = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     ticker = models.ForeignKey(Ticker, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Course(models.Model):
+    author = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    description = models.TextField(null=False, blank=False)
+    resources = models.URLField(null=False, blank=False)
+    picture = models.URLField(null=True, blank=True)

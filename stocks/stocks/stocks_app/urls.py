@@ -7,8 +7,11 @@ from .views import (
     UserDetails, 
     TickerDetails,
     MoreDetails, 
+    CourseListView,
+    CourseFormView,
     delete_ticker, 
     delete_comment,
+    create_content,
 )
 
 
@@ -22,7 +25,10 @@ urlpatterns = [
     path('delete-ticker/<int:ticker_id>', delete_ticker, name='delete_ticker'),
     path('delete-comment/<int:comment_id>/<int:ticker_id>', delete_comment, name='delete_comment'),
     path('ticker-details/<slug:ticker_name>', TickerDetails.as_view(), name='ticker_details'),
-    path('more-details/<int:ticker_id>', MoreDetails.as_view(), name='more_details')
+    path('more-details/<int:ticker_id>', MoreDetails.as_view(), name='more_details'),
+    path('courses', CourseListView.as_view(), name='list_courses'),
+    path('course-create', CourseFormView.as_view(), name='create_course'),
+    path('create-content', create_content, name='create_content'),
 ]
 
 # TO DO: fix index page, currently having two paths doing the same

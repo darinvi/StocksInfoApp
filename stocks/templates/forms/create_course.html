@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block page_content %}
+ 
+<form action="">
+    {{form.as_p}}
+    <button>Create</button>
+</form>
+{% csrf_token %}
+
+{% endblock %}
