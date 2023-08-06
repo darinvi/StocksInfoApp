@@ -112,6 +112,7 @@ class CourseFormView(auth_mixins.LoginRequiredMixin, views.CreateView):
     form_class = CourseModelForm
     model = Course
     template_name = 'forms/create_course.html'
+    success_url = reverse_lazy('list_courses')
 
     def form_valid(self, form):
         form.instance.author = self.request.user

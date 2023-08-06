@@ -2,7 +2,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views import generic as views
-from stocks.stocks_app.models import Profile
+from stocks.stocks_app.models import Profile, Course, Ticker, Comment
 from django import forms
 from django.urls import reverse_lazy
 from django.urls import reverse
@@ -52,3 +52,20 @@ def delete_account(request):
     logout(request)
     user.delete()
     return redirect(reverse('login_user'))
+
+def delete_course(request):
+    user = UserModel.objects.get(pk=request.user.pk)
+    course = Course.objects.get(author=user)
+    return redirect(reverse('courses'))
+
+def delete_ticker(request, ticker_id):
+    ticker = Ticker.objects.get(pk=ticker_id)
+    if request.user.is_staff or request.user.is_superuser or ticker.user == request.user:
+        ticker.delete()
+    return redirect(reverse('list_strategies'))
+
+def delete_comment(request, comment_id, ticker_id):
+    comment = Comment.objects.get(pk=comment_id)
+    if request.user.is_staff or request.user.is_superuser or comment.author == request.user:
+        comment.delete()
+    return redirect(reverse('post_comment', kwargs={'ticker_pk': ticker_id}))

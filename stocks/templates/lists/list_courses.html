@@ -2,6 +2,8 @@
 
 {% block page_content %}
 
-    <h1>ToDo: LIST COURSES</h1>
+    {% for obj in object_list %}
+    <h1>{{ obj.description }}</h1>
+    {% endfor %}
 
 {% endblock %}

@@ -2,10 +2,10 @@
 
 {% block page_content %}
  
-<form action="">
+<form action="{% url 'create_course' %}" method="post">
     {{form.as_p}}
     <button>Create</button>
+    {% csrf_token %}
 </form>
-{% csrf_token %}
 
 {% endblock %}
