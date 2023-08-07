@@ -1,0 +1,18 @@
+{% load static %}
+
+<div class="trade-idea">
+    <div class="course-picture">
+        {% with picture_path='pictures/'|add:obj.picture %}
+        <img src="{% static picture_path %}" alt="{{ obj.picture }}">
+        {% endwith %}
+        <div class="course-info-container">
+            <h2>{{ obj.description }}</h2>
+            <a href="#">Course Resources at {{ obj.resources }}</a>
+        </div>
+    </div>
+    <h1>Created by: {{ obj.author.profile.first_name }}</h1>
+    <h2>Price: ${{ obj.price }}</h2>
+    {% if request.user.pk == obj.author.pk %}
+    <a href="{% url 'delete_course' course_id=obj.pk %}">delete</a>
+    {% endif %}
+</div>

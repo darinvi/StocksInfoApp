@@ -1,0 +1,11 @@
+.course-picture {
+    display: flex;
+    /* color: red; */
+    gap: 2em;
+}
+
+.course-picture img {
+    width: 30%;
+    height: auto;
+    border-radius: 10px;
+}

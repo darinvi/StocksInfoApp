@@ -1,9 +1,8 @@
 {% extends 'index.html' %}
-
 {% block page_content %}
 
     {% for obj in object_list %}
-    <h1>{{ obj.description }}</h1>
+        {% include 'components/course_component.html' %}
     {% endfor %}
 
 {% endblock %}

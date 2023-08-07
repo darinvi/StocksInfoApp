@@ -9,8 +9,6 @@ from .views import (
     MoreDetails, 
     CourseListView,
     CourseFormView,
-    delete_ticker, 
-    delete_comment,
     create_content,
 )
 

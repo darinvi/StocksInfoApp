@@ -74,18 +74,6 @@ class UserDetails(views.ListView):
         user = get_object_or_404(AppUser, pk=self.kwargs['user_pk'])
         queryset = Ticker.objects.filter(user=user)
         return queryset
-    
-def delete_ticker(request, ticker_id):
-    ticker = Ticker.objects.get(pk=ticker_id)
-    if request.user.is_staff or request.user.is_superuser or ticker.user == request.user:
-        ticker.delete()
-    return redirect(reverse('list_strategies'))
-
-def delete_comment(request, comment_id, ticker_id):
-    comment = Comment.objects.get(pk=comment_id)
-    if request.user.is_staff or request.user.is_superuser or comment.author == request.user:
-        comment.delete()
-    return redirect(reverse('post_comment', kwargs={'ticker_pk': ticker_id}))
 
 class TickerDetails(views.ListView):
     model = Ticker

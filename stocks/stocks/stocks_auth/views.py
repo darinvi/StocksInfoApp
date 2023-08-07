@@ -53,10 +53,11 @@ def delete_account(request):
     user.delete()
     return redirect(reverse('login_user'))
 
-def delete_course(request):
-    user = UserModel.objects.get(pk=request.user.pk)
-    course = Course.objects.get(author=user)
-    return redirect(reverse('courses'))
+def delete_course(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    if course.author.pk == request.user.pk:
+        course.delete()
+    return redirect(reverse('list_courses'))
 
 def delete_ticker(request, ticker_id):
     ticker = Ticker.objects.get(pk=ticker_id)

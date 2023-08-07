@@ -41,4 +41,5 @@ class Course(models.Model):
     author = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     description = models.TextField(null=False, blank=False)
     resources = models.URLField(null=False, blank=False)
-    picture = models.URLField(null=True, blank=True)
+    picture = models.CharField(null=True, blank=True)
+    price = models.FloatField(null=False, blank=False)
