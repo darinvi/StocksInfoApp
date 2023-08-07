@@ -10,7 +10,7 @@
             <a href="#">Course Resources at {{ obj.resources }}</a>
         </div>
     </div>
-    <h1>Created by: {{ obj.author.profile.first_name }}</h1>
+    <h1>Created by: <a href="{% url 'user_details' user_pk=obj.author.pk %}">{{ obj.author.profile.first_name }}</a></h1>
     <h2>Price: ${{ obj.price }}</h2>
     {% if request.user.pk == obj.author.pk %}
     <a href="{% url 'delete_course' course_id=obj.pk %}">delete</a>

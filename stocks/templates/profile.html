@@ -1,17 +1,12 @@
 {% extends 'index.html' %}
 
+
 {% block page_content %}
 
 <h1>Current User: {{ request.user.profile.first_name }}</h1>
 <h2>Email: {{ request.user }}</h2>
-<a href="{% url 'delete_account' %}">Delete Account</a>
-
-{% if object_list|length == 0 %}
-    <h1>No Posts Yet</h1>
-{% else %}
-<h2>All posts:</h2>
-{% for obj in object_list %}
-    {% include 'components/list_component.html' %}
-{% endfor %}
-{% endif %}
+<div class="profile-links">
+    <a href="{% url 'delete_account' %}">Delete Account</a>
+    <a href="{% url 'user_details' user_pk=request.user.pk %}">View All Posts</a>
+</div>
 {% endblock %}
