@@ -1,0 +1,35 @@
+<div id="candlestick-chart">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var chartDates = {{ dates| safe }};
+        var chartOpens = {{ opens| safe }};
+        var chartHighs = {{ highs| safe }};
+        var chartLows = {{ lows| safe }};
+        var chartCloses = {{ closes| safe }};
+
+        var trace = {
+            x: chartDates,
+            open: chartOpens,
+            high: chartHighs,
+            low: chartLows,
+            close: chartCloses,
+            decreasing: { line: { color: '#FF0000' } },
+            increasing: { line: { color: '#00FF00' } },
+            type: 'candlestick'
+        };
+
+        var data = [trace];
+
+        var layout = {
+            title: '{{ ticker|upper }} Chart',
+            xaxis: {
+                rangeslider: {
+                    visible: false
+                }
+            }
+        };
+
+        Plotly.newPlot('candlestick-chart', data, layout);
+    </script>
+</div>

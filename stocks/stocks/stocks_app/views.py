@@ -8,6 +8,9 @@ from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins
 from django.shortcuts import get_object_or_404
 from . import stock_info
+from django import template
+
+register = template.Library()
 
 class TickerCreateView(CreateView):
     model = Ticker
@@ -119,8 +122,15 @@ def stock_data(request, ticker_name=None):
     elif ticker_name is not None:
         try: 
             context = stock_info.get_last_data(ticker_name)
+            context['ticker'] = ticker_name
         except:
             context = {'err': True}
         return render(request, 'components/stock_data_component.html', context=context)
     else:
         return render(request, 'forms/stock_data_input.html')
+    
+@register.inclusion_tag('components/render_chart')
+def render_chart(symbol):
+    return {
+        'symbol': symbol
+    }
