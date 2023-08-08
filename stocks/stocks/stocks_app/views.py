@@ -61,8 +61,7 @@ class CommentCreateView(auth_mixins.LoginRequiredMixin, views.CreateView, views.
     def get_success_url(self):
         return reverse_lazy('post_comment', kwargs={'ticker_pk': self.kwargs['ticker_pk']})
     
-class UserDetails(views.ListView):
-    model = Ticker
+class UserDetails(views.TemplateView):
     template_name = 'lists/user_details.html'
 
     def get_context_data(self, **kwargs):
@@ -91,7 +90,9 @@ class MoreDetails(views.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ticker'] = Ticker.objects.get(pk=self.kwargs['ticker_id'])
+        ticker = Ticker.objects.get(pk=self.kwargs['ticker_id'])
+        context['ticker'] = ticker
+        context['comments_list'] = Comment.objects.filter(ticker=ticker)
         return context
     
 class CourseFormView(auth_mixins.LoginRequiredMixin, views.CreateView):
@@ -116,7 +117,7 @@ def stock_data(request, ticker_name=None):
     if request.method == 'POST':
         return redirect('stock_data', ticker_name=request.POST.get('ticker_name'))
     elif ticker_name is not None:
-
+        
         context = {
 
         }

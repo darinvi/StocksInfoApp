@@ -5,5 +5,9 @@
 <p>Ticker: {{ ticker.ticker_name }}</p>
 <h1>Strategy: {{ ticker.trade_strategy }}</h1>
 
-
+<h2>Comments:</h2>
+{% for obj in comments_list reversed %}
+{% include 'components/comment_component.html' %}
+{% endfor %}
+<h2><a href="{% url 'post_comment' ticker_pk=ticker.pk %}">Write A Comment</a></h2>
 {% endblock %}

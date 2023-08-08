@@ -3,7 +3,7 @@
 {% block page_content %}
 <form method="post" action="{% url 'stock_data_input' %}">
 <input type="text" name="ticker_name">
-<button type="submit">Get Data</button>
+<button type="submit">Get Ticker Data</button>
 {% csrf_token %}
 </form>
 {% endblock %}
