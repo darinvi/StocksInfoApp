@@ -2,6 +2,7 @@
 {% block page_content %}
     {% if object_list|length > 0%}
     <h1>Total of {{ object_list|length }} posts about {{ ticker_name }}</h1>
+    <p><a href="{% url 'stock_data' ticker_name=ticker_name %}">{{ ticker_name|upper }} Stock Data</a></p>
         {% for obj in object_list %}
             {% include 'components/list_component.html' %}
         {% endfor %}

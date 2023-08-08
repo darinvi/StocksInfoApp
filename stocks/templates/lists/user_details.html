@@ -1,14 +1,25 @@
 {% extends 'index.html' %}
 
 {% block page_content %}
-
-<h1>Total Ideas Posted: {{ object_list|length }}</h1>
-
-
-{% for obj in object_list %}
-
-{% include 'components/list_component.html' %}
-
-{% endfor %}
+<div class="user-details">
+    <div class="ticker-list">
+        <h1>Total Ideas Posted: {{ ticker_list|length }}</h1>    
+        
+        {% for obj in ticker_list %}
+        
+        {% include 'components/list_component.html' %}
+        
+        {% endfor %}
+    </div>
+    <div class="course-list">
+        <h1>Total Courses Created: {{ course_list|length }}</h1>    
+        
+        {% for obj in course_list %}
+        
+        {% include 'components/course_component.html' %}
+        
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}

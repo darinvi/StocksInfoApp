@@ -10,6 +10,7 @@ from .views import (
     CourseListView,
     CourseFormView,
     create_content,
+    stock_data,
 )
 
 
@@ -25,6 +26,8 @@ urlpatterns = [
     path('courses', CourseListView.as_view(), name='list_courses'),
     path('course-create', CourseFormView.as_view(), name='create_course'),
     path('create-content', create_content, name='create_content'),
+    path('stock-data/<slug:ticker_name>', stock_data, name='stock_data'),
+    path('stock-data', stock_data, name='stock_data_input'),
 ]
 
 # TO DO: fix index page, currently having two paths doing the same

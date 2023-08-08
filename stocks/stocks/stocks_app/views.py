@@ -7,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins
 from django.shortcuts import get_object_or_404
-
+from . import stock_data
 
 class TickerCreateView(CreateView):
     model = Ticker
@@ -67,13 +67,11 @@ class UserDetails(views.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_pk'] = self.kwargs.get('user_pk')
-        return context
-    
-    def get_queryset(self):    
         user = get_object_or_404(AppUser, pk=self.kwargs['user_pk'])
-        queryset = Ticker.objects.filter(user=user)
-        return queryset
+        context['ticker_list'] = Ticker.objects.filter(user=user)
+        context['course_list'] = Course.objects.filter(author=user)
+        return context
+
 
 class TickerDetails(views.ListView):
     model = Ticker
@@ -113,3 +111,15 @@ class CourseListView(views.ListView):
 
 def create_content(request):
     return render(request, 'components/create_content.html')
+
+def stock_data(request, ticker_name=None):
+    if request.method == 'POST':
+        return redirect('stock_data', ticker_name=request.POST.get('ticker_name'))
+    elif ticker_name is not None:
+
+        context = {
+
+        }
+        return render(request, 'components/stock_data_component.html', context=context)
+    else:
+        return render(request, 'forms/stock_data_input.html')

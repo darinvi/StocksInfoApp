@@ -6,13 +6,17 @@
         <img src="{% static picture_path %}" alt="{{ obj.picture }}">
         {% endwith %}
         <div class="course-info-container">
+            {% if request.resolver_match.url_name == 'list_courses' %}
             <h2>{{ obj.description }}</h2>
+            {% endif %}
             <a href="#">Course Resources at {{ obj.resources }}</a>
         </div>
     </div>
+    {% if request.resolver_match.url_name == 'list_courses' %}
     <h1>Created by: <a href="{% url 'user_details' user_pk=obj.author.pk %}">{{ obj.author.profile.first_name }}</a></h1>
     <h2>Price: ${{ obj.price }}</h2>
     {% if request.user.pk == obj.author.pk %}
     <a href="{% url 'delete_course' course_id=obj.pk %}">delete</a>
+    {% endif %}
     {% endif %}
 </div>
