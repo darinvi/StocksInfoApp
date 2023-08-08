@@ -1,4 +1,14 @@
 {% extends 'index.html' %}
 
 {% block page_content %}
+{% if err %}
+<h1>Ticker Name Does Not Exist!</h1>
+<a href="{% url 'stock_data_input' %}">Try New Ticker</a>
+{% else %}
+<h1>Open: {{ o }}</h1>
+<h1>High: {{ h }}</h1>
+<h1>Low: {{ l }}</h1>
+<h1>Close: {{ c }}</h1>
+<h1>Volume: {{ v }}</h1>
+{% endif %}
 {% endblock %}
