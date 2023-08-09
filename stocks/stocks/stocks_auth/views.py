@@ -55,13 +55,13 @@ def delete_account(request):
 
 def delete_course(request, course_id):
     course = Course.objects.get(pk=course_id)
-    if course.author.pk == request.user.pk:
+    if course.author == request.user or request.user.is_superuser:
         course.delete()
     return redirect(reverse('list_courses'))
 
 def delete_ticker(request, ticker_id):
     ticker = Ticker.objects.get(pk=ticker_id)
-    if request.user.is_staff or request.user.is_superuser or ticker.user == request.user:
+    if request.user.is_superuser or ticker.user == request.user:
         ticker.delete()
     return redirect(reverse('list_strategies'))
 

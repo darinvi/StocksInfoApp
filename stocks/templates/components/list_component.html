@@ -9,7 +9,7 @@
     <div class="more-info">
     <a href="{% url 'more_details' ticker_id=obj.pk %}">More</a>
     <a href="{% url 'post_comment' ticker_pk=obj.pk %}">Comments</a>
-    {% if obj.user == request.user or request.user.is_superuser or request.user.is_staff %}
+    {% if obj.user == request.user or request.user.is_superuser %}
     <a href="{% url 'delete_ticker' ticker_id=obj.pk %}">delete</a>
     {% endif %}
     </div>

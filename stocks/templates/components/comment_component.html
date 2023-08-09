@@ -1,7 +1,7 @@
 <div class="comment">
     <h1>{{ obj.comment }}</h1>
     <p>Posted by: {{ obj.author.profile.first_name }} at {{ obj.created_at }}</p>
-    {% if request.user == obj.author %}
+    {% if request.user == obj.author or request.user.is_superuser or request.user.is_staff %}
     <a href="{% url 'delete_comment' comment_id=obj.pk  ticker_id=obj.ticker.pk %}">delete</a>
     {% endif %}
 </div>

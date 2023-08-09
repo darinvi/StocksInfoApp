@@ -13,7 +13,7 @@
     {% if request.resolver_match.url_name == 'list_courses' %}
     <h1>Created by: <a href="{% url 'user_details' user_pk=obj.author.pk %}">{{ obj.author.profile.first_name }}</a></h1>
     <h2>Price: ${{ obj.price }}</h2>
-    {% if request.user.pk == obj.author.pk %}
+    {% if request.user.pk == obj.author.pk or request.user.is_superuser %}
     <a href="{% url 'delete_course' course_id=obj.pk %}">delete</a>
     {% endif %}
     {% endif %}
