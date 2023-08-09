@@ -1,9 +1,7 @@
-{% load static %}
-
 <div class="trade-idea">
     <div class="course-picture">
         {% with picture_path='pictures/'|add:obj.picture %}
-        <img src="{% static picture_path %}" alt="{{ obj.picture }}">
+        <img src="{{ obj.picture }}" alt="{{ obj.picture }}">
         {% endwith %}
         <div class="course-info-container">
             {% if request.resolver_match.url_name == 'list_courses' %}

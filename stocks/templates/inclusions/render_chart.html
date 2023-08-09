@@ -2,13 +2,13 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
-        var chartDates = {{ dates| safe }};
-        var chartOpens = {{ opens| safe }};
-        var chartHighs = {{ highs| safe }};
-        var chartLows = {{ lows| safe }};
-        var chartCloses = {{ closes| safe }};
+        const chartDates = {{ dates| safe }};
+        const chartOpens = {{ opens| safe }};
+        const chartHighs = {{ highs| safe }};
+        const chartLows = {{ lows| safe }};
+        const chartCloses = {{ closes| safe }};
 
-        var trace = {
+        const trace = {
             x: chartDates,
             open: chartOpens,
             high: chartHighs,
@@ -19,9 +19,9 @@
             type: 'candlestick'
         };
 
-        var data = [trace];
+        const data = [trace];
 
-        var layout = {
+        const layout = {
             title: '{{ ticker|upper }} Chart',
             xaxis: {
                 rangeslider: {
