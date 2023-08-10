@@ -1,0 +1,7 @@
+<form method="post" action="{% url 'create_transaction' %}">
+{% csrf_token %}
+<input type="number" name="amount" required>
+<input type="hidden" name="ticker" value="{{ ticker }}">
+<input type="hidden" name="price" value="{{ c }}">
+<input type="submit" value="Execute">
+</form>

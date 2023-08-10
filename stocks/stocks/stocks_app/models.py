@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 UserModel = get_user_model()
 
@@ -15,6 +15,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True
     )
+    # balance = models.FloatField()
 
 class Ticker(models.Model):
     ticker_name = models.CharField(
@@ -43,3 +44,11 @@ class Course(models.Model):
     resources = models.URLField(null=False, blank=False)
     picture = models.URLField(null=True, blank=True)
     price = models.FloatField(null=False, blank=False)
+
+class Transaction(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.DO_NOTHING)
+    ticker = models.CharField()
+    amount = models.IntegerField(MinValueValidator(1))
+    price = models.FloatField()
+    executed_at = models.DateTimeField(auto_now_add=True)
+

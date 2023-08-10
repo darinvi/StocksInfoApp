@@ -1,12 +1,17 @@
 {% extends 'index.html' %}
+{% load custom_tags %}
 
 
 {% block page_content %}
-
-<h1>Current User: {{ request.user.profile.first_name }}</h1>
-<h2>Email: {{ request.user }}</h2>
-<div class="profile-links">
-    <a href="{% url 'delete_account' %}">Delete Account</a>
-    <a href="{% url 'user_details' user_pk=request.user.pk %}">View All Posts</a>
+<div class="profile-info">
+    <div>
+        <h1>Current User: {{ request.user.profile.first_name }}</h1>
+        <h2>Email: {{ request.user }}</h2>
+        <div class="profile-links">
+            <a href="{% url 'delete_account' %}">Delete Account</a>
+            <a href="{% url 'user_details' user_pk=request.user.pk %}">View All Posts</a>
+        </div>
+    </div>
+    {% profile_positions request.user.pk %}
 </div>
 {% endblock %}

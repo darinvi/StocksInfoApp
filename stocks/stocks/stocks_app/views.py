@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
-from .models import Ticker, Comment, Course
+from .models import Ticker, Comment, Course, Transaction
 from stocks.stocks_auth.models import AppUser
 from .forms import TickerModelForm, CommentModelForm, CourseModelForm
 from django.urls import reverse_lazy, reverse
@@ -128,3 +128,12 @@ def stock_data(request, ticker_name=None):
     else:
         return render(request, 'forms/stock_data_input.html')
     
+def create_transaction(request):
+    data = request.POST
+    if request.method == 'POST':
+        tx = { k:data[k] for k in list(data.keys()) if k != 'csrfmiddlewaretoken'}
+        tx['user'] = request.user
+        if tx['amount'] != 0:
+            Transaction.objects.create(**tx)
+    return redirect(reverse('stock_data', args=[data['ticker']]))
+

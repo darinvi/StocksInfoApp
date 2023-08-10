@@ -1,6 +1,7 @@
 from django import template
 from stocks.stocks_app.stock_info import get_all_data
 from datetime import datetime
+from stocks.stocks_app.models import Transaction
 
 register = template.Library()
 
@@ -23,3 +24,81 @@ def render_chart(ticker):
         'ticker': ticker
     }
 
+
+@register.inclusion_tag('inclusions/display_position.html')
+def display_position(ticker, pk, price):
+    tx = Transaction.objects.filter(user__pk=pk, ticker=ticker)
+    amount = sum([t.amount for t in tx])
+
+    return {
+        'ticker':ticker,
+        'amount': amount,
+        'valued': amount * price
+    }
+
+
+@register.inclusion_tag('inclusions/profile_positions.html')
+def profile_positions(pk):
+    transactions = Transaction.objects.filter(user__pk=pk)
+    tickers = set([t.ticker for t in transactions])
+
+    # positions = [get_position_data(transactions, ticker) for ticker in tickers]    
+    positions = [get_position_data(transactions, ticker) for ticker in ['spy']]    
+
+    return {
+        'positions': 'hi'
+    }
+
+
+class Tx:
+    def __init__(self, amount, price):
+        self.amount = amount
+        self.price = price
+        self.final = False
+
+def get_position_data(tx, ticker):
+    curr_tx = [t for t in tx if t.ticker == ticker]
+    print(ticker)
+    get_current_position(curr_tx)
+
+def get_current_position(tx):
+    transactions = [Tx(a.amount, a.price) for a in tx]
+    while len(transactions) > 1:
+        if transactions[0].final:
+            break
+        for i in range(1,len(transactions)):
+            transactions = list(filter(lambda x: x.amount != 0, transactions))
+            print([(t.amount, t.price) for t in transactions])
+            curr_tx = transactions[i]
+            benchmark = transactions[0]
+            if benchmark.amount * curr_tx.amount > 0 and len(set([ 1 for t in transactions if t.amount * benchmark.amount > 0])) == 1: 
+                print([(t.amount, t.price) for t in transactions])
+                total_amount = sum([ t.amount for t in transactions])
+                average_price = sum([ t.amount * t.price for t in transactions]) / total_amount
+                print(total_amount)
+                print(average_price)
+                last_tx = Tx(total_amount, average_price)
+                last_tx.final = True
+                transactions = [ last_tx ]
+                break
+            if benchmark.amount * curr_tx.amount > 0:
+                continue
+            if benchmark.amount > 0 and abs(curr_tx.amount) <= benchmark.amount:
+                benchmark.amount -= -curr_tx.amount
+                curr_tx.amount = 0
+                break
+            if benchmark.amount > 0 and abs(curr_tx.amount) > benchmark.amount:
+                curr_tx.amount += benchmark.amount 
+                benchmark.amount = 0
+                break
+            if benchmark.amount < 0 and curr_tx.amount <= abs(benchmark.amount):
+                benchmark.amount += curr_tx.amount
+                curr_tx.amount = 0
+                break
+            if benchmark.amount < 0 and curr_tx.amount > abs(benchmark.amount):
+                curr_tx.amount += benchmark.amount
+                benchmark.amount = 0
+                break
+
+    print(transactions[0].amount)
+    print(transactions[0].price)
