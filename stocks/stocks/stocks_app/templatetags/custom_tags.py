@@ -42,12 +42,14 @@ def profile_positions(pk):
     transactions = Transaction.objects.filter(user__pk=pk)
     tickers = set([t.ticker for t in transactions])
 
-    # positions = [get_position_data(transactions, ticker) for ticker in tickers]    
-    positions = [get_position_data(transactions, ticker) for ticker in ['spy']]    
+    if transactions:
+        positions = {ticker:get_position_data(transactions, ticker) for ticker in tickers}  
+        total_exposure = calculate_total_exposure(positions)
 
-    return {
-        'positions': 'hi'
-    }
+        return { 
+            'positions': positions,
+            'total': total_exposure
+        }
 
 
 class Tx:
@@ -58,8 +60,7 @@ class Tx:
 
 def get_position_data(tx, ticker):
     curr_tx = [t for t in tx if t.ticker == ticker]
-    print(ticker)
-    get_current_position(curr_tx)
+    return get_current_position(curr_tx)
 
 def get_current_position(tx):
     transactions = [Tx(a.amount, a.price) for a in tx]
@@ -68,37 +69,50 @@ def get_current_position(tx):
             break
         for i in range(1,len(transactions)):
             transactions = list(filter(lambda x: x.amount != 0, transactions))
-            print([(t.amount, t.price) for t in transactions])
+            if len(transactions) == 1:
+                break
+            if i > len(transactions):
+                break
+            print(transactions, i)
             curr_tx = transactions[i]
             benchmark = transactions[0]
-            if benchmark.amount * curr_tx.amount > 0 and len(set([ 1 for t in transactions if t.amount * benchmark.amount > 0])) == 1: 
-                print([(t.amount, t.price) for t in transactions])
+
+            if benchmark.amount * curr_tx.amount > 0 and len(set([ 1 for t in transactions if t.amount * benchmark.amount > 0])) == len(transactions): 
                 total_amount = sum([ t.amount for t in transactions])
                 average_price = sum([ t.amount * t.price for t in transactions]) / total_amount
-                print(total_amount)
-                print(average_price)
                 last_tx = Tx(total_amount, average_price)
                 last_tx.final = True
                 transactions = [ last_tx ]
                 break
+            
             if benchmark.amount * curr_tx.amount > 0:
                 continue
+            
             if benchmark.amount > 0 and abs(curr_tx.amount) <= benchmark.amount:
                 benchmark.amount -= -curr_tx.amount
                 curr_tx.amount = 0
                 break
+            
             if benchmark.amount > 0 and abs(curr_tx.amount) > benchmark.amount:
                 curr_tx.amount += benchmark.amount 
                 benchmark.amount = 0
                 break
+            
             if benchmark.amount < 0 and curr_tx.amount <= abs(benchmark.amount):
                 benchmark.amount += curr_tx.amount
                 curr_tx.amount = 0
                 break
+            
             if benchmark.amount < 0 and curr_tx.amount > abs(benchmark.amount):
                 curr_tx.amount += benchmark.amount
                 benchmark.amount = 0
                 break
 
-    print(transactions[0].amount)
-    print(transactions[0].price)
+    return { 
+        'amount': transactions[0].amount,
+        'price': transactions[0].price,
+        'total': abs(transactions[0].amount) * transactions[0].price,
+    }
+
+def calculate_total_exposure(positons):
+    return  sum([total['total'] for total in positons.values()])
