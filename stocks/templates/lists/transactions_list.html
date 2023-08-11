@@ -1,0 +1,6 @@
+{% extends 'index.html' %}
+{% block page_content %}
+{%  for obj in object_list %}
+    {% include 'components/single_transaction.html' %}
+{% endfor %}
+{% endblock %}

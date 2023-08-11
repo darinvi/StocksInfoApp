@@ -48,7 +48,8 @@ def profile_positions(pk):
 
         return { 
             'positions': positions,
-            'total': total_exposure
+            'total': total_exposure,
+            'user_pk': pk
         }
 
 
@@ -59,7 +60,6 @@ class Tx:
         self.final = False
 
 def get_position_data(tx, ticker):
-    print(ticker)
     curr_tx = [t for t in tx if t.ticker == ticker]
     return get_current_position(curr_tx)
 

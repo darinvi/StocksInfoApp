@@ -9,6 +9,7 @@ from .views import (
     MoreDetails, 
     CourseListView,
     CourseFormView,
+    TransactionListView,
     create_content,
     stock_data,
     create_transaction
@@ -30,6 +31,7 @@ urlpatterns = [
     path('stock-data/<slug:ticker_name>', stock_data, name='stock_data'),
     path('stock-data', stock_data, name='stock_data_input'),
     path('create-transaction', create_transaction, name='create_transaction'),
+    path('list-transactions/<slug:ticker_name>/<int:user_pk>', TransactionListView.as_view(), name='list_transactions'),
 ]
 
 # TO DO: fix index page, currently having two paths doing the same

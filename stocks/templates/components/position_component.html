@@ -1,7 +1,7 @@
 <div class="position-component">
-    <h1>Ticker: {{ key }} with ${{ val.total | floatformat:2 }} exposure</h1>
-    <div class="position-data">
-        <h2>Amount: {{ val.amount }}</h2>
-        <h2>Average Price: {{ val.price | floatformat:2 }}</h2>
-    </div>
+    <h1>Ticker: {{ key | upper }}</h1>
+    <h2>Amount: {{ val.amount }}</h2>
+    <h2>Average Price: {{ val.price | floatformat:2 }}</h2>
+    <h2>Exposure: ${{ val.total | floatformat:2 }}</h2>
+    <a href="{% url 'list_transactions' ticker_name=key user_pk=user_pk %}">See All Transactions For {{ key|upper }}</a>
 </div>

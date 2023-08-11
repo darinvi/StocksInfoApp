@@ -137,3 +137,18 @@ def create_transaction(request):
             Transaction.objects.create(**tx)
     return redirect(reverse('stock_data', args=[data['ticker']]))
 
+class TransactionListView(views.ListView):
+    model = Transaction
+    template_name = 'lists/transactions_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticker_name'] = self.kwargs.get('ticker_name')
+        context['user_pk'] = self.kwargs.get('user_pk')
+        return context
+    
+    def get_queryset(self):    
+        ticker = self.kwargs['ticker_name']
+        pk = self.kwargs['user_pk']
+        queryset = Transaction.objects.filter(ticker=ticker, user__pk=pk)
+        return queryset

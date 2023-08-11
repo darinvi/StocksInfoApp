@@ -5,7 +5,8 @@
 
 .trade-idea,
 .comment,
-.position-component {
+.position-component,
+.single-transaction {
     background-color: rgba(255, 0, 0, 0.2);
     margin: 1.5em 0;
     padding: 1.5em;
