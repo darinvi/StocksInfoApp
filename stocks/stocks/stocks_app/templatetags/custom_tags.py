@@ -59,6 +59,7 @@ class Tx:
         self.final = False
 
 def get_position_data(tx, ticker):
+    print(ticker)
     curr_tx = [t for t in tx if t.ticker == ticker]
     return get_current_position(curr_tx)
 
@@ -73,11 +74,10 @@ def get_current_position(tx):
                 break
             if i > len(transactions):
                 break
-            print(transactions, i)
             curr_tx = transactions[i]
             benchmark = transactions[0]
 
-            if benchmark.amount * curr_tx.amount > 0 and len(set([ 1 for t in transactions if t.amount * benchmark.amount > 0])) == len(transactions): 
+            if benchmark.amount * curr_tx.amount > 0 and len([ t for t in transactions if t.amount * benchmark.amount > 0]) == len(transactions): 
                 total_amount = sum([ t.amount for t in transactions])
                 average_price = sum([ t.amount * t.price for t in transactions]) / total_amount
                 last_tx = Tx(total_amount, average_price)
