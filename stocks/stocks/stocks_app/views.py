@@ -152,3 +152,17 @@ class TransactionListView(views.ListView):
         pk = self.kwargs['user_pk']
         queryset = Transaction.objects.filter(ticker=ticker, user__pk=pk)
         return queryset
+    
+class CompleteTransactionHistoryListView(views.ListView):
+    model = Transaction
+    template_name = 'lists/transactions_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_pk'] = self.kwargs.get('user_pk')
+        return context
+    
+    def get_queryset(self):    
+        pk = self.kwargs['user_pk']
+        queryset = Transaction.objects.filter(user__pk=pk)
+        return queryset

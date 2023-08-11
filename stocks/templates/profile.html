@@ -10,6 +10,7 @@
         <div class="profile-links">
             <a href="{% url 'delete_account' %}">Delete Account</a>
             <a href="{% url 'user_details' user_pk=request.user.pk %}">View All Posts</a>
+            <a href="{% url 'list_all_transactions' user_pk=request.user.pk %}">View All Transactions</a>
         </div>
     </div>
     {% profile_positions request.user.pk %}
