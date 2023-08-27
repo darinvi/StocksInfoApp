@@ -1,0 +1,15 @@
+form button {
+    border-radius: 8px;
+    padding: 0.5em 1.5em;
+    background-color: lightcoral;
+}
+
+input:focus {
+    background-color: white;
+    font-size: 1.1em;
+}
+
+input {
+    background-color: gray;
+    border-radius: 8px;
+}

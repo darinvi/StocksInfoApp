@@ -1,0 +1,15 @@
+html {
+    min-height: 100%;
+    background-color: pink;
+    font-family: serif, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    border-radius: 1px solid;
+    color: gray;
+}
+
+button:hover {
+    font-size: 1.2em;
+}
